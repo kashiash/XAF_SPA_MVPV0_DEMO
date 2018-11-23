@@ -3,8 +3,8 @@ using DevExpress.ExpressApp.Spa.AspNetCore.Mvc;
 
 namespace SpaDemo.Spa.Controllers {
     public class SpaDemoSpaMetaDataController : DevExpress.ExpressApp.Spa.AspNetCore.Mvc.MetaDataController {
-        public SpaDemoSpaMetaDataController(ISpaApplicationProvider applicationProvider) :
-            base(applicationProvider) {
-        }
+        //public SpaDemoSpaMetaDataController(ISpaApplicationProvider applicationProvider) : base(applicationProvider) {
+        public SpaDemoSpaMetaDataController(ISpaApplicationConfigProvider applicationProvider) : base(applicationProvider) { }
+    
     }
 }

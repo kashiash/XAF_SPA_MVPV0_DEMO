@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Spa;
+using DevExpress.ExpressApp.Spa.AspNetCore;
 
 namespace SpaDemo.Spa {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/DevExpressExpressAppWebWebApplicationMembersTopicAll.aspx
@@ -27,7 +28,9 @@ namespace SpaDemo.Spa {
             LinkNewObjectToParentImmediately = false;
         }
         #endregion
-        public SpaDemoSpaApplication() {
+        // public SpaDemoSpaApplication() {
+        public SpaDemoSpaApplication(ISpaApplicationConfigProvider spaApplicationConfigProvider) : base(spaApplicationConfigProvider)
+        {
             Tracing.Initialize();
             if (ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
                 ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
