@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/main.css" rel="stylesheet">
+    <title>SPA UI DEMO</title>
+</head>
+
+<body>
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root" style="display: none;"></div>    
+
+    <div id="xaf-load-indicator">
+        <div class="wrapper">
+            <img class="logo" src="/logo.svg" />
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="title">Loading Application...</div>
+        </div>
+    </div>
+    <style>
+        #xaf-load-indicator {
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #xaf-load-indicator .wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #xaf-load-indicator .logo {
+            width: 270px;
+            height: 96px;
+        }
+
+        #xaf-load-indicator .progress-bar {
+            height: 3px;
+            background: #dddddd;
+            margin-top: 20px;
+        }
+
+        #xaf-load-indicator .progress {
+            width: 0;
+            height: 100%;
+            background: #FF8D4D;
+            box-shadow: 0px 0px 5px #FF8D4D;
+            transition: width 1s;
+        }
+
+        #xaf-load-indicator .title {
+            align-self: center;
+            margin-top: 20px;
+            color: #adadad;
+            font: 14px 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, sans-serif;
+        }
+    </style>
+    <script>
+        var loadIndicator = document.getElementById("xaf-load-indicator"),
+            loadIndicatorProgress = loadIndicator.getElementsByClassName("progress")[0],
+            root = document.getElementById("root"),
+            timeout = 0,
+            progress = 0,
+            handle = setTimeout(updateProgress, timeout);
+
+        function updateProgress() {
+            var estimated = 1.0 - progress,
+                step = estimated / 2;
+
+            progress += step;
+            timeout += 1000;
+            loadIndicatorProgress.style.width = progress * 100 + "%";
+
+            handle = setTimeout(updateProgress, timeout);
+        }
+
+        function completeProgress() {
+            clearTimeout(handle);
+            loadIndicator.style.display = "none";
+            root.style.display= "";
+        }
+    </script>
+
+    <script type="text/javascript" src="/static/js/main.js"></script>
+
+</body>
+
+</html>

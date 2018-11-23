@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="SpaDemo">
+  <ActionDesign>
+    <Actions>
+      <Action Id="CreateDashboard">
+        <DisableReasons>
+          <Reason Id="SPA" IsNewNode="True" />
+        </DisableReasons>
+      </Action>
+      <Action Id="DeleteDashboard">
+        <DisableReasons>
+          <Reason Id="SPA" IsNewNode="True" />
+        </DisableReasons>
+      </Action>
+    </Actions>
+    <ActionToContainerMapping>
+      <ActionContainer Id="Save">
+        <ActionLink ActionId="SaveAndClose" Index="1" />
+        <ActionLink ActionId="SaveAndNew" Index="2" />
+      </ActionContainer>
+    </ActionToContainerMapping>
+  </ActionDesign>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="18.2.3.0" IsNewNode="True" />
+  </SchemaModules>
+  <ViewItems>
+    <PropertyEditor Name="PropertyEditors">
+      <RegisteredPropertyEditor PropertyType="System.DateTime" DefaultDisplayFormat="shortDateShortTime" />
+    </PropertyEditor>
+  </ViewItems>
+</Application>

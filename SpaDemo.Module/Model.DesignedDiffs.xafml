@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Company=" Developer Express Inc." Copyright="Copyright © 2018" VersionFormat="V0 Version" Title="SPA UI Demo">
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="18.2.3.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="DemoNote_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="16.203703703703702">
+            <LayoutGroup Id="DemoNote" RelativeSize="100" Caption="DemoNote" Direction="Horizontal">
+              <LayoutGroup Id="Auto77a752c1-a576-4629-aacc-e93b0c1c8bd2" ShowCaption="False" Caption="" Index="0" RelativeSize="47.438752783964368" IsNewNode="True">
+                <LayoutItem Id="Subject" ViewItem="Subject" Index="0" RelativeSize="51.428571428571431" IsNewNode="True" />
+                <LayoutItem Id="Owner" ViewItem="Owner" Index="1" RelativeSize="48.571428571428569" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Auto1b13cfa2-86e2-4d69-adc3-3678446d5836" ShowCaption="False" Caption="" Index="1" RelativeSize="52.561247216035632" IsNewNode="True">
+                <LayoutItem Id="LastModified" ViewItem="LastModified" Index="0" RelativeSize="51.428571428571431" IsNewNode="True" />
+                <LayoutItem Id="CreatedOn" ViewItem="CreatedOn" Index="1" RelativeSize="48.571428571428569" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutItem Id="LastModified" Index="1" RelativeSize="18.485523385300667" Removed="True" />
+              <LayoutItem Id="Owner" Index="1" RelativeSize="21.311475409836067" Removed="True" />
+              <LayoutItem Id="CreatedOn" Index="2" RelativeSize="21.311475409836067" Removed="True" />
+              <LayoutItem Id="Subject" RelativeSize="29.508196721311474" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="83.796296296296291">
+            <LayoutItem Id="Description" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="DemoNote_ListView" Caption="Notes" IsGroupPanelVisible="True">
+      <Columns>
+        <ColumnInfo Id="Subject" Width="232" Index="0" />
+        <ColumnInfo Id="LastModified" Index="1" Width="240" SortIndex="0" SortOrder="Descending"  />
+        <ColumnInfo Id="CreatedOn" Index="2" Width="244" />
+        <ColumnInfo Id="Owner" Index="3" SortIndex="-1" GroupIndex="0" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>
