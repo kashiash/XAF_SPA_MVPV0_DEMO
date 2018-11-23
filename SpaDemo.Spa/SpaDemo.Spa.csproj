@@ -1,0 +1,154 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;DebugTest;NET461</DefineConstants>
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Api\IndexPageController.cs" />
+    <Compile Include="Api\ApplicationController.cs" />
+    <Compile Include="Api\MetaDataController.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SpaApplication.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  
+    <ItemGroup>
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="1.4.9" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SpaApplication.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Update="SpaApplication.Designer.cs">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpaApplication.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="appsettings.Development.json" />
+    <Content Include="appsettings.json" />
+    <Content Include="Model.xafml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\launchSettings.json" />
+    <Content Include="wwwroot\favicon.ico" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\manifest.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="common.ps1" />
+    <None Include="extract.ps1" />
+    <Content Include="wwwroot\logo.svg" />
+    <Content Include="wwwroot\service-worker.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SpaApplication.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpaDemo.Module.Spa\SpaDemo.Module.Spa.csproj" />
+    <ProjectReference Include="..\SpaDemo.Module\SpaDemo.Module.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.ExpressApp.Mobile.v18.2">
+    <Private>False</Private></Reference>
+    <Reference Include="DevExpress.ExpressApp.Spa.v18.2">
+    <Private>False</Private></Reference>
+    <Reference Include="DevExpress.ExpressApp.v18.2">
+    <Private>False</Private></Reference>
+    <Reference Include="DevExpress.ExpressApp.Xpo.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.Data.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Images.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.Persistent.Base.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.Persistent.BaseImpl.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.Utils.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v18.2">
+      <SpecificVersion>False</SpecificVersion>
+      
+    </Reference>
+  </ItemGroup>
+  <!-- Workaround for https://github.com/dotnet/roslyn-project-system/issues/1739 -->
+  <PropertyGroup>
+    <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+  </PropertyGroup>
+  <Target Name="BuildClientSide" BeforeTargets="Build">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true" ConsoleToMSBuild="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js 8+ is required to build and run this project. To continue, please install the latest LTS release of Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Error Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(OutputOfExec)', 'v(1|2|3|4|5|6|7)\.'))" Text="Node.js 8+ is required to build and run this project. To continue, please install the latest LTS release of Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+
+    <Message Importance="high" Text="Performing checks and updates..." />
+    <Exec Command="PowerShell.exe -ExecutionPolicy UnRestricted -File ./extract.ps1" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="PowerShell.exe -ExecutionPolicy UnRestricted -File ./extract.ps1" />
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\**; ClientApp\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>
